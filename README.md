@@ -30,10 +30,10 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/PanJiaChen/vue-admin-template.git
+git clone https://github.com/ltx0720/graduation-project-admind-Jay.git
 
 # 进入项目目录
-cd vue-admin-template
+cd graduation-project-admind-Jay
 
 # 安装依赖
 npm install
