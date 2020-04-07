@@ -11,8 +11,8 @@
 
 
 <script>
-import m from "@/views/editor/markdown";
-import r from "@/views/editor/richtext";
+import m from "@/views/common/editor/markdown";
+import r from "@/views/common/editor/richtext";
 
 export default {
   data() {

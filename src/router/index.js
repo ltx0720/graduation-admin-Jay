@@ -22,14 +22,20 @@ export const constantRoutes = [
     children: [
       {
         path: 'richtext',
-        component: () => import('@/views/editor/richtext'), // Parent router-view
+        component: () => import('@/views/common/editor/richtext'), // Parent router-view
         meta: { title: '富文本' }
       },
       {
         path: 'markdown',
-        component: () => import('@/views/editor/markdown'), // Parent router-view
+        component: () => import('@/views/common/editor/markdown'), // Parent router-view
         name: 'Bs-start',
         meta: { title: 'md' }
+      },
+      {
+        path: 'file',
+        component: () => import('@/views/common/filedownload'), // Parent router-view
+        name: '文件下载',
+        meta: { title: 'file' }
       }
     ]
   },
@@ -157,11 +163,26 @@ export const constantRoutes = [
     children: [
       {
         path: '',
-        component: () => import('@/views/teacher/publish'),
+        component: () => import('@/views/common/publish'),
         meta: { title: '发布', icon: 'form' }
       }
     ]
   },
+
+  // 导师审批
+  {
+    path: '/teacher/approve',
+    component: Layout,
+    // redirect: '/example/table',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/teacher/approve'),
+        meta: { title: '审批', icon: 'form' }
+      }
+    ]
+  },
+
 
   {
     path: '/404',
