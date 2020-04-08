@@ -3,13 +3,14 @@ import { MessageBox, Message, Notification  } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-const service = axios.create({
+// 认证授权服务器地址
+const authorization = axios.create({
   baseURL: 'http://localhost:8080',
   timeout: 60 * 1000
 })
 
 // 过滤器
-service.interceptors.request.use(
+authorization.interceptors.request.use(
   config => {
     // 如果已登录则带上token
     // if (store.getters.token) {
@@ -25,16 +26,14 @@ service.interceptors.request.use(
 )
 
 // response interceptor
-service.interceptors.response.use(
+authorization.interceptors.response.use(
   response => {
     const res = response.data
+    let code = res.code;
 
-    var su = res.success;
-    if(su){
+    if(code == '200'){
       return res;
-      this.$rou
     }else{
-
      Message.error({
         showClose: true,
         message: '错了哦，这是一条错误消息',
@@ -53,4 +52,4 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+export default authorization

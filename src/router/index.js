@@ -5,41 +5,7 @@ Vue.use(Router)
 
 import Layout from '@/layout'
 
-export const constantRoutes = [
-  {
-    path: '/login',
-    component: () => import('@/views/common/login')
-  },
-
-   // test
-   {
-    path: '/test',
-    component: Layout,
-    meta: {
-      title: 'test',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'richtext',
-        component: () => import('@/views/common/editor/richtext'), // Parent router-view
-        meta: { title: '富文本' }
-      },
-      {
-        path: 'markdown',
-        component: () => import('@/views/common/editor/markdown'), // Parent router-view
-        name: 'Bs-start',
-        meta: { title: 'md' }
-      },
-      {
-        path: 'file',
-        component: () => import('@/views/common/filedownload'), // Parent router-view
-        name: '文件下载',
-        meta: { title: 'file' }
-      }
-    ]
-  },
-
+export const studenMenu = [
   // student 首页
   {
     path: '/student/home',
@@ -99,7 +65,7 @@ export const constantRoutes = [
   // {
   //   path: '/gather',
   //   component: Layout,
-    
+
   //   children: [
   //     {
   //       path: 'index',
@@ -126,20 +92,10 @@ export const constantRoutes = [
         meta: { title: '开题报告' }
       }
     ]
-  },
+  }
+]
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-
+export const teacherMenu = [
   // teacher
   // 首页
   {
@@ -183,6 +139,13 @@ export const constantRoutes = [
     ]
   },
 
+]
+
+export const constantRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/common/login')
+  },
 
   {
     path: '/404',
@@ -191,20 +154,37 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  scrollBehavior: () => ({ y: 0 }),
+const router =  new Router({
+  // scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
-const router = createRouter()
+var test = {
+  path: 'external-link',
+  component: Layout,
+  children: [
+    {
+      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+      meta: { title: 'External Link', icon: 'link' }
+    }
+  ]
+}
+
+// const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+
+  // const newRouter = createRouter()
+  // router.matcher = newRouter.matcher // reset router
 }
-export const testdata = {"name": "123"}
+
+export function updateRouter() {
+  alert("updateRouter")
+  router.addRoutes(test);
+}
+
 export default router

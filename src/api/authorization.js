@@ -1,12 +1,12 @@
-import request from '@/utils/request'
-import { config } from '@vue/test-utils'
+import authorization from '@/utils/request'
+// import { config } from '@vue/test-utils'
 
 export function login(data) {
   var param = new URLSearchParams()
   param.append('username', data['username'])
   param.append('password', data['password'])
 
-  return request({
+  return authorization({
     url: '/authentication/form',
     method: 'post',
     data: param

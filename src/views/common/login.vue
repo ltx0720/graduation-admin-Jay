@@ -64,7 +64,7 @@
 
 <script>
 import { validUsername } from "@/utils/validate";
-import { testdata, constantRoutes } from "@/router/index";
+import { studentMenu, constantRoutes } from "@/router/index";
 import Layout from '@/layout'
 
 export default {
@@ -95,19 +95,6 @@ export default {
         ],
         password: [
           { required: true, trigger: "blur", validator: validatePassword }
-        ]
-      },
-      dsadsr: {
-        path: "/home",
-        component: Layout,
-        // redirect: '/dashboard',
-        children: [
-          {
-            path: "home",
-            name: "Home",
-            component: () => import("@/views/student/home"),
-            meta: { title: "首页", icon: "dashboard" }
-          }
         ]
       },
       loading: false,
@@ -146,17 +133,14 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          // 找store下的user.js里的login
+          // 向认证授权服务器发送请求
           this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(data => {
-              // alert("login finish")
-              // alert('login finish')
-              // 登录成功后重定向至首页
-              // constantRoutes.push;
-             
-              this.$router.push({ path: "/home" });
+            .dispatch("authorization/login", this.loginForm)
+            .then(() => {
+              // alert("login success")
+              // 登录成功后跳转至首页
               this.loading = false;
+               this.$router.push({ path: "/student/home" });
             })
             .catch(() => {
               // 登录失败
