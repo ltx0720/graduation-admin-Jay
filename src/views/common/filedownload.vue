@@ -42,26 +42,26 @@ export default {
            url: dir,
           name: "毕设文件"
         },
-         {
-           id: 3,
-           url: zip,
-          name: "毕设文件"
-        },
-         {
-           id: 4,
-           url: avi,
-          name: "毕设文件"
-        },
-         {
-           id: 5,
-           url: pdf,
-          name: "毕设文件"
-        },
-         {
-           id: 6,
-           url: pdf,
-          name: "毕设文件"
-        }
+        //  {
+        //    id: 3,
+        //    url: zip,
+        //   name: "毕设文件"
+        // },
+        //  {
+        //    id: 4,
+        //    url: avi,
+        //   name: "毕设文件"
+        // },
+        //  {
+        //    id: 5,
+        //    url: pdf,
+        //   name: "毕设文件"
+        // },
+        //  {
+        //    id: 6,
+        //    url: pdf,
+        //   name: "毕设文件"
+        // }
       ]
     };
   },

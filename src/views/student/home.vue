@@ -1,62 +1,61 @@
 <template>
   <div class="components-container">
     <div class="msgScope">
-      <!-- <el-col :span="4" class="text-center">
-            <router-link class="pan-btn blue-btn">
-              Documentation
-            </router-link>
-      </el-col>-->
       <el-button v-on:click="test" class="pan-btn tiffany-btn" plain>全部消息</el-button>
       <el-button class="pan-btn tiffany-btn" size="small" plain>校级级消息</el-button>
       <el-button class="pan-btn tiffany-btn" size="small" plain>院级消息</el-button>
     </div>
     <div>
       <el-timeline>
-        <el-timeline-item timestamp="2018/4/12" placement="top">
-          <el-card style="width: 500px">
-            <h4>更新 Github 模板</h4>
-            <p>王小虎 提交于 2018/4/12 20:46</p>
-          </el-card>
-        </el-timeline-item>
-        <el-timeline-item timestamp="2018/4/3" placement="top">
-          <el-card style="width: 700px">
-            <h4>更新 Github 模板</h4>
-            <p>王小虎 提交于 2018/4/3 20:46</p>
-          </el-card>
-        </el-timeline-item>
-        <!-- <el-timeline-item timestamp="2018/4/2" placement="top">
-          <el-col :span="8" :key="o" :offset="index > 0 ? 2 : 0">
-            <el-card :body-style="{ padding: '0px' }" style="width: 500px">
-              <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-              <div style="padding: 14px;">
-                <span>好吃的汉堡</span>
-                <div class="bottom clearfix">
-                  <time class="time">2018</time>
-                  <el-button type="text" class="button">操作按钮</el-button>
-                </div>
-              </div>
+        <el-timeline-item
+          v-for="(news, index) in newsList"
+          :key="index"
+          placement="top"
+        >
+            <el-card style="width: 500px">
+              <h4>{{news.title}}</h4>
+              <p>{{news.author}} 提交于 {{news.create}}</p>
             </el-card>
-          </el-col>
-        </el-timeline-item>-->
+        </el-timeline-item>
       </el-timeline>
     </div>
   </div>
 </template>
 
 <script>
-import Layout from '@/layout'
-import { testdata } from '@/router/index'
+import Layout from "@/layout";
+import { testdata } from "@/router/index";
+import { getNews } from "@/api/student";
+import store from "@/store";
 
 export default {
   name: "Home",
   computed: {
     // ...mapGetters(["name"])
   },
-
+  data() {
+    return {
+      newsList: []
+    };
+  },
   methods: {
-    test: function() {
-      alert('home:'+JSON.stringify(testdata))
+    // 获取消息通知
+    getNews: function() {
+      return new Promise((resolve, reject) => {
+        getNews()
+          .then(response => {
+            this.newsList = response.data;
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     }
+  },
+
+  mounted: function() {
+    this.getNews();
   }
 };
 </script>

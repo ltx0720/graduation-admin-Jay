@@ -40,7 +40,6 @@
             <el-button
               class="cancel-btn"
               size="small"
-              icon="el-icon-refresh"
               type="warning"
               @click="cancelEdit(row)"
               style="float: right"
@@ -52,7 +51,6 @@
             v-if="row.edit"
             type="success"
             size="small"
-            icon="el-icon-circle-check-outline"
             @click="confirmEdit(row)"
              style="float: right; margin-right:80px"
           >确定</el-button>
@@ -60,7 +58,6 @@
             v-else
             type="primary"
             size="small"
-            icon="el-icon-edit"
             @click="row.edit=!row.edit"
             style="float: right"
           >编辑</el-button>

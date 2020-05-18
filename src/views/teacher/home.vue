@@ -1,6 +1,6 @@
 <template>
   <div class="components-container">
-    <el-row :gutter="40" class="panel-group">
+    <!-- <el-row :gutter="40" class="panel-group">
       <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
           <div class="card-panel-icon-wrapper icon-approve">
@@ -8,7 +8,6 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">查看待审批</div>
-            <!-- <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" /> -->
           </div>
         </div>
       </el-col>
@@ -19,7 +18,6 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">发布任务</div>
-            <!-- <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" /> -->
           </div>
         </div>
       </el-col>
@@ -30,26 +28,33 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">查看文件</div>
-            <!-- <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" /> -->
           </div>
         </div>
       </el-col>
-    </el-row>
+    </el-row>-->
 
-    <p>学生信息</p>
-    <el-table :data="tableData" stripe style="width: 90%">
-      <el-table-column prop="id" label="序号"></el-table-column>
-      <el-table-column prop="number" label="学号"></el-table-column>
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="class" label="班级"></el-table-column>
-      <el-table-column prop="topic" label="课题"></el-table-column>
-    </el-table>
+      <div class="msgScope" style="margin-top: 30px; margin-left: 50px">
+        <el-button class="pan-btn tiffany-btn" plain>全部消息</el-button>
+        <el-button class="pan-btn tiffany-btn" size="small" plain>校级级消息</el-button>
+        <el-button class="pan-btn tiffany-btn" size="small" plain>院级消息</el-button>
+      </div>
+      <div style="margin-top: 15px; ">
+        <el-timeline>
+          <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
+            <el-card style="width: 500px">
+              <h2>{{news.title}}</h2>
+              <p style="float: right">{{news.author}} 提交于 {{news.create}}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
   </div>
 </template>
 
 
 <script>
 import CountTo from "vue-count-to";
+import { getTeacherNews } from "@/api/common";
 
 export default {
   name: "teacherHome",
@@ -58,22 +63,31 @@ export default {
   },
   data() {
     return {
-      // lineChartData: lineChartData.newVisitis,
-      tableData: [
-        {
-          id: 1,
-          number: 16110572022,
-          name: "的萨芬",
-          class: "软件1601",
-          topic: "毕设管理系统"
-        }
-      ]
+      newsList: []
     };
   },
   methods: {
+
+    getTeacherNews: function() {
+      return new Promise((resolve, reject) => {
+        getTeacherNews()
+          .then(response => {
+            this.newsList = response.data;
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
+
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type];
     }
+  },
+
+  mounted: function() {
+    this.getTeacherNews();
   }
 };
 </script>

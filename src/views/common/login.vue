@@ -125,11 +125,6 @@ export default {
       });
     },
     handleLogin() {
-      // testdata["name"] = "aaa";
-      // alert(JSON.stringify(testdata));
-      // alert(this.dsadsr)
-      //  console.log(this.dsadsr);
-      //  constantRoutes.push(this.dsadsr)
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
@@ -137,10 +132,9 @@ export default {
           this.$store
             .dispatch("authorization/login", this.loginForm)
             .then(() => {
-              // alert("login success")
               // 登录成功后跳转至首页
-              this.loading = false;
-               this.$router.push({ path: "/student/home" });
+              // this.loading = false;
+               this.$router.push({ path: "/teacher/home" , query: this.otherQuery });
             })
             .catch(() => {
               // 登录失败
