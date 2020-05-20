@@ -6,14 +6,18 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 export const studenMenu = [
+  {
+    path: '/home',
+    component: () => import('@/views/student/home')
+  },
   // student 首页
   {
     path: '/student/home',
     component: Layout,
-    // redirect: '/dashboard',
+    title: "首页",
+    // meta: { title: '', icon: '' },
     children: [{
       path: '',
-      name: 'Home',
       component: () => import('@/views/student/home'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
@@ -23,7 +27,7 @@ export const studenMenu = [
   {
     path: '/student/chose_teacher',
     component: Layout,
-    // redirect: '/example/table',
+    meta: { title: '', icon: '' },
     children: [
       {
         path: '',
@@ -50,49 +54,32 @@ export const studenMenu = [
       {
         path: 'bs-start',
         component: () => import('@/views/student/start'), // Parent router-view
-        name: 'Bs-start',
         meta: { title: '开题报告' }
       },
       {
-        path: 'bs_upload',
-        name: 'Bs_upload',
+        path: 'bs-upload',
         component: () => import('@/views/student/upload'),
         meta: { title: '毕设提交' }
       }
     ]
   },
 
-  // {
-  //   path: '/gather',
+   // 毕设流程
+  //  {
+  //   path: '/student/task',
   //   component: Layout,
-
+  //   meta: {
+  //     title: '实时任务',
+  //     icon: 'nested'
+  //   },
   //   children: [
   //     {
-  //       path: 'index',
-  //       name: 'Gather',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: '信息统计', icon: 'form' }
+  //       path: 'start',
+  //       component: () => import('@/views/student/start'), // Parent router-view
+  //       meta: { title: '审批管理' }
   //     }
   //   ]
   // },
-  // 实时任务
-  {
-    path: '/student/task',
-    component: Layout,
-    // redirect: '/nested/menu1',
-    meta: {
-      title: '实时任务',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'bs-start',
-        component: () => import('@/views/student/start'), // Parent router-view
-        name: 'Bs-start',
-        meta: { title: '开题报告' }
-      }
-    ]
-  }
 ]
 
 export const teacherMenu = [
@@ -111,7 +98,20 @@ export const teacherMenu = [
     ]
   },
 
-  // 发布消息
+  {
+    path: '/teacher/student',
+    component: Layout,
+    // redirect: '/example/table',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/teacher/student'),
+        meta: { title: '学生信息', icon: 'table' }
+      }
+    ]
+  },
+
+  // 发布消息通知
   {
     path: '/teacher/publish',
     component: Layout,
@@ -119,8 +119,8 @@ export const teacherMenu = [
     children: [
       {
         path: '',
-        component: () => import('@/views/common/publish'),
-        meta: { title: '发布', icon: 'form' }
+        component: () => import('@/views/teacher/publish'),
+        meta: { title: '发布', icon: 'guide' }
       }
     ]
   },
@@ -134,57 +134,103 @@ export const teacherMenu = [
       {
         path: '',
         component: () => import('@/views/teacher/approve'),
+        meta: { title: '审批', icon: 'lock' }
+      }
+    ]
+  }
+
+]
+
+export const managerMenu = [
+  
+  // 首页
+  {
+    path: '/manager/home',
+    component: Layout,
+    // redirect: '/example/table',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/manager/home'),
+        meta: { title: '首页', icon: 'form' }
+      }
+    ]
+  },
+
+  // 审批
+  {
+    path: '/manager/approve',
+    component: Layout,
+    // redirect: '/example/table',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/manager/approve'),
         meta: { title: '审批', icon: 'form' }
       }
     ]
   },
 
+   // 菜单管理
+   {
+    path: '/manager/menu',
+    component: Layout,
+    // redirect: '/example/table',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/manager/menu'),
+        meta: { title: '菜单管理', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/manager/file',
+    component: Layout,
+    // redirect: '/example/table',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/common/filedownload'),
+        meta: { title: '文件下载', icon: 'form' }
+      }
+    ]
+  }
+
 ]
 
 export const constantRoutes = [
+
   {
     path: '/login',
     component: () => import('@/views/common/login')
   },
+
+
 
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
-
-  // 404 page must be placed at the end !!!
-  // { path: '*', redirect: '/404', hidden: true }
 ]
 
-const router =  new Router({
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
   // scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
-var test = {
-  path: 'external-link',
-  component: Layout,
-  children: [
-    {
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: { title: 'External Link', icon: 'link' }
-    }
-  ]
-}
+const router = createRouter()
 
-// const router = createRouter()
-
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
-
-  // const newRouter = createRouter()
-  // router.matcher = newRouter.matcher // reset router
+export function resetRouter(routes) {
+  constantRoutes = routes;
 }
 
 export function updateRouter() {
-  alert("updateRouter")
-  router.addRoutes(test);
+  // alert("updateRouter")
+  // router.addRoutes(test);
 }
 
 export default router
