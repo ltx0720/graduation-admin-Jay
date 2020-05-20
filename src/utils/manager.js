@@ -4,14 +4,14 @@ import { Message } from 'element-ui'
 // 认证授权服务器地址
 const manager = axios.create({
   baseURL: 'http://127.0.0.1:8082',
-  timeout: 60
+  timeout: 6* 1000
 })
 
 // 过滤器
 manager.interceptors.request.use(
   config => {
     // 如果已登录则带上token
-    // if (store.getters.token) {
+    // if (store  .getters.token) {
     //   config.headers['token'] = getToken()
     // }
 
@@ -34,7 +34,7 @@ manager.interceptors.response.use(
     }else{
      Message.error({
         showClose: true,
-        message: '错了哦，这是一条错误消息',
+        message: '请求出错，请稍后再试',
         type: 'error'
       }).alert;
     }

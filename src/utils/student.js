@@ -4,7 +4,7 @@ import { MessageBox, Message, Notification  } from 'element-ui'
 // 认证授权服务器地址
 const student = axios.create({
   baseURL: 'http://127.0.0.1:8082',
-  timeout: 60
+  timeout: 6 * 1000
 })
 
 // 过滤器
