@@ -34,7 +34,7 @@ export default {
     routes() {
       // alert(this.$router.options.routes)
       // console.log(this.$router.options.routes)
-      // return this.$router.options.routes
+      // return JSON.parse(localStorage.getItem('routers'))||{}
     },
     activeMenu() {
       const route = this.$route
