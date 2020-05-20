@@ -31,16 +31,13 @@
     <slot></slot>
   </el-table>
   <footer>
-    <el-button @click="getAuth">确定</el-button>
+    <el-button type="primary" @click="getAuth">确定</el-button>
   </footer>
 </div>
 </template>
 
 <script>
-/**
-  Auth: Lei.j1ang
-  Created: 2018/1/19-13:59
-*/
+
 import treeToArray from './eval'
 export default {
   name: 'treeTable',
