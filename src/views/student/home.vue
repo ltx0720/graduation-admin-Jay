@@ -1,56 +1,47 @@
 <template>
   <div class="components-container">
-    <div class="msgScope">
-      <el-button v-on:click="test" class="pan-btn tiffany-btn" plain>全部消息</el-button>
-      <el-button class="pan-btn tiffany-btn" size="small" plain>校级级消息</el-button>
-      <el-button class="pan-btn tiffany-btn" size="small" plain>院级消息</el-button>
-    </div>
-    <div>
-      <el-timeline>
-        <el-timeline-item
-          v-for="(news, index) in newsList"
-          :key="index"
-          placement="top"
-        >
+      <aside>消息通知</aside>
+      <div style="margin-top: 15px; ">
+        <el-timeline>
+          <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
             <el-card style="width: 500px">
-              <h4>{{news.title}}</h4>
-              <p>{{news.author}} 提交于 {{news.create}}</p>
+              <h3>{{news.title}}</h3>
+              <p style="float: right">{{news.author}} - {{news.create_time}}</p>
             </el-card>
-        </el-timeline-item>
-      </el-timeline>
-    </div>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
   </div>
 </template>
 
-<script>
-import Layout from "@/layout";
-import { testdata } from "@/router/index";
-import { getNews } from "@/api/student";
-import store from "@/store";
 
+<script>
+import CountTo from "vue-count-to";
+import { getNews } from "@/api/student";
 export default {
-  name: "Home",
-  computed: {
-    // ...mapGetters(["name"])
-  },
+  name: "studentHome",
   data() {
     return {
       newsList: []
     };
   },
   methods: {
-    // 获取消息通知
     getNews: function() {
       return new Promise((resolve, reject) => {
         getNews()
           .then(response => {
             this.newsList = response.data;
+            console.log(response.data)
             resolve();
           })
           .catch(error => {
             reject(error);
           });
       });
+    },
+
+    handleSetLineChartData(type) {
+      this.lineChartData = lineChartData[type];
     }
   },
 
@@ -61,57 +52,92 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
+.panel-group {
+  margin-top: 18px;
+
+  .card-panel-col {
+    margin-bottom: 32px;
   }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
+
+  .card-panel {
+    height: 108px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      .card-panel-icon-wrapper {
+        color: #fff;
+      }
+    }
+
+    .icon-approve {
+      color: #40c9c6;
+    }
+
+    .icon-publish {
+      color: #36a3f7;
+    }
+
+    .icon-file {
+      color: #f4516c;
+    }
+
+    .card-panel-icon-wrapper {
+      float: left;
+      margin: 14px 0 0 14px;
+      padding: 16px;
+      transition: all 0.38s ease-out;
+      border-radius: 6px;
+    }
+
+    .card-panel-icon {
+      float: left;
+      font-size: 48px;
+    }
+
+    .card-panel-description {
+      float: right;
+      font-weight: bold;
+      margin: 26px;
+      margin-right: 20%;
+      margin-top: 40px;
+
+      .card-panel-text {
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      .card-panel-num {
+        font-size: 20px;
+      }
+    }
   }
 }
-.msgScope {
-  margin-left: 45px;
-  color: red;
-  margin-bottom: 20px;
-}
-.time {
-  font-size: 13px;
-  color: #999;
-}
 
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
-}
+@media (max-width: 550px) {
+  .card-panel-description {
+    display: none;
+  }
 
-.button {
-  padding: 0;
-  float: right;
-}
+  .card-panel-icon-wrapper {
+    float: none !important;
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
 
-.image {
-  width: 100%;
-  height: 200px;
-  display: block;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-.mixin-components-container {
-  background-color: #f0f2f5;
-  padding: 30px;
-  min-height: calc(100vh - 84px);
-}
-.component-item {
-  min-height: 100px;
+    .svg-icon {
+      display: block;
+      margin: 14px auto !important;
+      float: none !important;
+    }
+  }
 }
 </style>

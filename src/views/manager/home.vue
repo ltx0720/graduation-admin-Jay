@@ -1,20 +1,23 @@
 <template>
   <div class="components-container">
-    <aside>学生信息</aside>
-    <el-table :data="studentList" stripe style="width: 90%">
-      <el-table-column type="index" label="序号"></el-table-column>
-      <!-- <el-table-column prop="number" label="学号"></el-table-column> -->
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="class_name" label="班级"></el-table-column>
-      <el-table-column prop="topic_title" label="课题"></el-table-column>
-    </el-table>
+      <aside>消息通知</aside>
+      <div style="margin-top: 15px; ">
+        <el-timeline>
+          <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
+            <el-card style="width: 500px">
+              <h3>{{news.title}}</h3>
+              <p style="float: right">{{news.author}} 提交于 {{news.create}}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
   </div>
 </template>
 
 
 <script>
 import CountTo from "vue-count-to";
-import { getStudentList } from "@/api/teacher";
+import { getNews } from "@/api/manager";
 
 export default {
   name: "teacherHome",
@@ -23,15 +26,16 @@ export default {
   },
   data() {
     return {
-      studentList: []
+      newsList: []
     };
   },
   methods: {
-    getStudentList: function() {
+
+    getTeacherNews: function() {
       return new Promise((resolve, reject) => {
-        getStudentList()
+        getNews()
           .then(response => {
-            this.studentList = response.data;
+            this.newsList = response.data;
             resolve();
           })
           .catch(error => {
@@ -46,7 +50,7 @@ export default {
   },
 
   mounted: function() {
-    this.getStudentList();
+    this.getTeacherNews();
   }
 };
 </script>

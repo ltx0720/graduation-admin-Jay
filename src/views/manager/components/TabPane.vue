@@ -4,7 +4,7 @@
 
   <el-table-column width="150px" align="center" label="申请类型">
       <template slot-scope="scope">
-        <span>{{ scope.row.approve_name }}</span>
+        <span>{{ scope.row.approve_type_name }}</span>
       </template>
     </el-table-column>
 
@@ -22,13 +22,13 @@
 
     <el-table-column width="150px" align="center" label="原导师">
       <template slot-scope="{row}">
-        <span>{{ row.teacher1_name }}</span>
+        <span>{{ row.old_teacher_name }}</span>
       </template>
     </el-table-column>
 
     <el-table-column width="150px" align="center" label="新导师">
       <template slot-scope="{row}">
-        <span>{{ row.teacher2_name }}</span>
+        <span>{{ row.new_teacher_name }}</span>
       </template>
     </el-table-column>
 
@@ -57,8 +57,8 @@
 
     <el-table-column v-if="state" align="center" label="操作">
       <template slot-scope="{row}">
-        <el-button type="success" size="mini" @click="approveHandle('pass', row.id)">通过</el-button>
-        <el-button type="danger" size="mini" @click="approveHandle('refuse', row.id)">拒绝</el-button>
+        <el-button type="success" size="mini" @click="approveHandle('pass', row)">通过</el-button>
+        <el-button type="danger" size="mini" @click="approveHandle('refuse', row)">拒绝</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -85,7 +85,7 @@ export default {
         type: this.type
       },
       loading: false,
-      state: ''
+      state: true
     };
   },
   created() {
@@ -93,7 +93,6 @@ export default {
   },
   mounted: function() {
     this.state = this.$route.query.tab == "pending" ? true : false;
-    alert(this.state)
   },
 
   methods: {
@@ -126,9 +125,9 @@ export default {
       });
     },
 
-    approveHandle(action, id) {
+    approveHandle(action, row) {
       return new Promise((resolve, reject) => {
-        approceHandle(action, id).then(response => {
+        approceHandle(action, row.id, row.opinion).then(response => {
           let msg, type;
           if (response.data == "success") {
             msg = "操作成功";

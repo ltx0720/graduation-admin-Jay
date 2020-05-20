@@ -1,48 +1,11 @@
 <template>
   <div class="components-container">
-    <!-- <el-row :gutter="40" class="panel-group">
-      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-          <div class="card-panel-icon-wrapper icon-approve">
-            <svg-icon icon-class="edit" class-name="card-panel-icon" />
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">查看待审批</div>
-          </div>
-        </div>
-      </el-col>
-      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('messages')">
-          <div class="card-panel-icon-wrapper icon-publish">
-            <svg-icon icon-class="guide" class-name="card-panel-icon" />
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">发布任务</div>
-          </div>
-        </div>
-      </el-col>
-      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('purchases')">
-          <div class="card-panel-icon-wrapper icon-file">
-            <svg-icon icon-class="skill" class-name="card-panel-icon" />
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">查看文件</div>
-          </div>
-        </div>
-      </el-col>
-    </el-row>-->
-
-      <div class="msgScope" style="margin-top: 30px; margin-left: 50px">
-        <el-button class="pan-btn tiffany-btn" plain>全部消息</el-button>
-        <el-button class="pan-btn tiffany-btn" size="small" plain>校级级消息</el-button>
-        <el-button class="pan-btn tiffany-btn" size="small" plain>院级消息</el-button>
-      </div>
+      <aside>消息通知</aside>
       <div style="margin-top: 15px; ">
         <el-timeline>
           <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
             <el-card style="width: 500px">
-              <h2>{{news.title}}</h2>
+              <h3>{{news.title}}</h3>
               <p style="float: right">{{news.author}} 提交于 {{news.create}}</p>
             </el-card>
           </el-timeline-item>
