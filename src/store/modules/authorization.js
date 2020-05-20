@@ -1,11 +1,10 @@
 import { login, logout, getInfo } from '@/api/authorization'
-import {studenMenu, updateRouter} from '@/router/index'
+import {studenMenu, teacherMenu, updateRouter, constantRouconstantRoutes } from '@/router/index'
 import router from '@/router/index'
 import store from '@/store'
 const state = {
     token: '',
     role: '',
-    // routers: router
 }
 
 const mutations = {
@@ -16,25 +15,31 @@ const mutations = {
 
 const actions = {
     login({ commit }, userInfo) {
-        const { username, password } = userInfo
-        return new Promise((resolve, reject) => {
-            login({ username: username.trim(), password: password }).then(response => {
-                commit("SET_TOKEN", response.token)
-                // 添加相应的权限路由
-                store.dispatch('permission/generateRoutes', studenMenu)
+        // const { username, password } = userInfo
+        // return new Promise((resolve, reject) => {
+            // 此login-> /api/authorization
+            // login({ username: username.trim(), password: password }).then(response => {
+                // commit("SET_TOKEN", response.token)
 
-                // console.log(this.$router)
-                // this.$router.options.routes  = router
-                router.addRoutes(studenMenu)
-                console.log(router)
-                // this.$router.options.routes = router;
-                // alert("add finish")
-                resolve()
-            }).catch(error => {
-                reject(error)
-            })
-        })
+                // let role = '1';
+                // store.dispatch('permission/generateRoutes', '1')
+                // router.addRoutes(studenMenu)
+                // sessionStorage.setItem("store", JSON.stringify(store.getters.permission_routes));
+                // resolve()
+            // }).catch(error => {
+                // reject(error)
+            // })
+        // })
     },
+
+    setaaa({commit}, data){
+        // alert(data)
+        commit("SET_TOKEN", data)
+    },
+
+    getToken(){
+        return state.token;
+    }
 }
 
 export default {
