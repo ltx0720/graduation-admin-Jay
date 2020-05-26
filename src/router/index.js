@@ -57,7 +57,7 @@ export const studenMenu = [
         meta: { title: '开题报告' }
       },
       {
-        path: 'bs-upload',
+        path: 'upload',
         component: () => import('@/views/student/upload'),
         meta: { title: '毕设提交' }
       }
@@ -142,7 +142,8 @@ export const teacherMenu = [
 ]
 
 export const managerMenu = [
-  
+
+
   // 首页
   {
     path: '/manager/home',
@@ -184,23 +185,38 @@ export const managerMenu = [
       }
     ]
   },
+ 
+  
+ {
+  path: '/manager/file',
+  component: Layout,
+  // redirect: '/example/table',
+  children: [
+    {
+      path: '',
+      component: () => import('@/views/common/fileshow'),
+      meta: { title: '查看文件', icon: 'form' }
+    }
+  ]
+},
 
-  {
-    path: '/manager/file',
-    component: Layout,
-    // redirect: '/example/table',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/common/filedownload'),
-        meta: { title: '文件下载', icon: 'form' }
-      }
-    ]
-  }
+  // {
+  //   path: '/manager/file',
+  //   component: Layout,
+  //   // redirect: '/example/table',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/common/filedownload'),
+  //       meta: { title: '文件下载', icon: 'form' }
+  //     }
+  //   ]
+  // }
 
 ]
 
 export const constantRoutes = [
+  
 
   {
     path: '/login',

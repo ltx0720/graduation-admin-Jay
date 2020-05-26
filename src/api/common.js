@@ -26,3 +26,10 @@ export function teacherPublish(content) {
   })
 }
 
+export function getFileList() {
+  return common({
+    url: '/c_server/t_news',
+    method: 'post',
+  })
+}
+

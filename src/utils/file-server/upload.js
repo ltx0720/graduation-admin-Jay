@@ -1,18 +1,17 @@
 import axios from 'axios'
-import { MessageBox, Message, Notification  } from 'element-ui'
+import { Message  } from 'element-ui'
 
 // 认证授权服务器地址
-const common = axios.create({
-  baseURL: 'http://127.0.0.1:8082',
+const upload = axios.create({
+  baseURL: 'http://localhost:8083',
   timeout: 6 * 1000
 })
 
 // 过滤器
-common.interceptors.request.use(
+upload.interceptors.request.use(
   config => {
-    // 如果已登录则带上token
     // if (store.getters.token) {
-      // config.headers['token'] = getToken()
+    //   config.headers['X-Token'] = getToken()
     // }
 
     return config
@@ -23,8 +22,7 @@ common.interceptors.request.use(
   }
 )
 
-// response interceptor
-common.interceptors.response.use(
+upload.interceptors.response.use(
   response => {
     const res = response.data
     let code = res.code;
@@ -50,4 +48,4 @@ common.interceptors.response.use(
   }
 )
 
-export default common
+export default upload

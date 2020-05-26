@@ -20,8 +20,8 @@ const mutations = {
 const actions = {
     generateRoutes({ commit }, roles) {
         return new Promise(resolve => {
-            commit('SET_ROUTES', managerMenu)
-            resolve(managerMenu)
+            commit('SET_ROUTES', studenMenu)
+            resolve(studenMenu)
         })
     },
 
