@@ -33,3 +33,10 @@ export function getFileList() {
   })
 }
 
+
+export function getMenuList() {
+  return common({
+    url: '/c_server/menu',
+    method: 'post',
+  })
+}

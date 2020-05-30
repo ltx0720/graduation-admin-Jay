@@ -37,17 +37,18 @@ export function getToken() {
     })
 }
 
-export function writeRecord(fileKey) {
+export function writeRecord(fileKey, type_id) {
     let param = new URLSearchParams();
     param.append('key', fileKey);
+    param.append('type_id', type_id);
 
     return upload({
         url: '/upload/record',
         method: 'post',
         data: param
     })
-}
-
+  }
+  
 function decrypt(data, key) {
     var realKey = getKey(key);
     var decrypt = CryptoJS.AES.decrypt({

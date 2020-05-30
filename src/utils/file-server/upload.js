@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Message  } from 'element-ui'
+import store from '@/store'
 
 // 认证授权服务器地址
 const upload = axios.create({
@@ -10,10 +11,10 @@ const upload = axios.create({
 // 过滤器
 upload.interceptors.request.use(
   config => {
-    // if (store.getters.token) {
-    //   config.headers['X-Token'] = getToken()
-    // }
-
+    let token = JSON.parse(sessionStorage.getItem('token'))
+    if (token) {
+      config.headers['token'] = token
+    }
     return config
   },
   error => {

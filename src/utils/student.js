@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { MessageBox, Message, Notification  } from 'element-ui'
+import { Message  } from 'element-ui'
+import store from '@/store'
 
 // 认证授权服务器地址
 const student = axios.create({
@@ -11,9 +12,10 @@ const student = axios.create({
 student.interceptors.request.use(
   config => {
     // 如果已登录则带上token
-    // if (store.getters.token) {
-    //   config.headers['token'] = getToken()
-    // }
+    let token = JSON.parse(sessionStorage.getItem('token'))
+    if (token) {
+      config.headers['token'] = token
+    }
 
     return config
   },

@@ -10,10 +10,10 @@ const teacher = axios.create({
 // 过滤器
 teacher.interceptors.request.use(
   config => {
-    // 如果已登录则带上token
-    // if (store.getters.token) {
-    //   config.headers['token'] = getToken()
-    // }
+    let token = JSON.parse(sessionStorage.getItem('token'))
+    if (token) {
+      config.headers['token'] = token
+    }
 
     return config
   },

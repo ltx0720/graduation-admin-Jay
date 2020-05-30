@@ -1,41 +1,37 @@
 import axios from 'axios'
-import { MessageBox, Message, Notification } from 'element-ui'
+import { MessageBox, Message, Notification  } from 'element-ui'
 import store from '@/store'
 
 // 认证授权服务器地址
-const common = axios.create({
-  baseURL: 'http://127.0.0.1:8082',
-  timeout: 6 * 1000
+const authorization = axios.create({
+  baseURL: 'http://localhost:8081',
+  timeout: 60 * 1000
 })
 
 // 过滤器
-common.interceptors.request.use(
+authorization.interceptors.request.use(
   config => {
     // 如果已登录则带上token
-    let token = JSON.parse(sessionStorage.getItem('token'))
-    // alert("token: "+ token)
-    if (token) {
-      config.headers['token'] = token
-    }
+    // if (store.getters.token) {
+    //   config.headers['X-Token'] = getToken()
+    // }
 
     return config
   },
   error => {
-    console.log(error) 
+    console.log(error) // for debug
     return Promise.reject(error)
   }
 )
 
 // response interceptor
-common.interceptors.response.use(
+authorization.interceptors.response.use(
   response => {
     const res = response.data
-    let code = res.code;
-
-    if (code == '200') {
+    if(res.code == '200'){
       return res;
-    } else {
-      Message.error({
+    }else{
+     Message.error({
         showClose: true,
         message: '请求出错，请稍后再试',
         type: 'error'
@@ -53,4 +49,4 @@ common.interceptors.response.use(
   }
 )
 
-export default common
+export default authorization
