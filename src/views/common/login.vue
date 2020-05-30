@@ -64,8 +64,9 @@
 
 <script>
 import { validUsername } from "@/utils/validate";
+import { getMenuList } from "@/utils/common";
 import { studentMenu, constantRoutes } from "@/router/index";
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 export default {
   name: "Login",
@@ -132,9 +133,12 @@ export default {
           this.$store
             .dispatch("authorization/login", this.loginForm)
             .then(() => {
-              // 登录成功后跳转至首页
-              // this.loading = false;
-               this.$router.push({ path: "/teacher/home" , query: this.otherQuery });
+              sessionStorage.setItem("roles", "1");
+              alert()
+              this.$router.push({
+                path:  "/home",
+                query: this.otherQuery
+              });
             })
             .catch(() => {
               // 登录失败

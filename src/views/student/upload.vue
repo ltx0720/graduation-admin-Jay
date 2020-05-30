@@ -1,6 +1,6 @@
 <template>
   <div class="components-container">
-    <aside>请上传压缩后的文件</aside>
+    <aside>毕业设计上传——请上传压缩后的文件</aside>
 
     <el-upload
       class="avatar-uploader"

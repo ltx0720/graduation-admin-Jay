@@ -9,9 +9,8 @@
       <el-table-column prop="direction" label="描述"></el-table-column>
       <el-table-column label="选择">
         <template slot-scope="props">
-          <!-- v-if="selected || props.row.state==0 " -->
-          <!-- <el-button type="primary" disabled>选择</el-button> -->
-          <el-button @click="buttonClick(props.row)" type="primary">选择</el-button>
+          <el-button v-if="selected || props.row.state==0 " type="primary" disabled>选择</el-button>
+          <el-button v-else @click="buttonClick(props.row)" type="primary">选择</el-button>
         </template>
       </el-table-column>
     </el-table>

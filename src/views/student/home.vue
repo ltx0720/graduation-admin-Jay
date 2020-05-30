@@ -1,16 +1,16 @@
 <template>
   <div class="components-container">
-      <aside>消息通知</aside>
-      <div style="margin-top: 15px; ">
-        <el-timeline>
-          <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
-            <el-card style="width: 500px">
-              <h3>{{news.title}}</h3>
-              <p style="float: right">{{news.author}} - {{news.create_time}}</p>
-            </el-card>
-          </el-timeline-item>
-        </el-timeline>
-      </div>
+    <aside>消息通知</aside>
+    <div style="margin-top: 15px; ">
+      <el-timeline>
+        <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
+          <el-card style="width: 500px">
+            <h3>{{news.title}}</h3>
+            <p style="float: right">{{news.author}} - {{news.create_time}}</p>
+          </el-card>
+        </el-timeline-item>
+      </el-timeline>
+    </div>
   </div>
 </template>
 
@@ -18,6 +18,13 @@
 <script>
 import CountTo from "vue-count-to";
 import { getNews } from "@/api/student";
+import { getMenuList } from "@/api/common";
+import Layout from "@/layout";
+import Vue from "vue";
+import Router from "vue-router";
+
+Vue.use(Router);
+
 export default {
   name: "studentHome",
   data() {
@@ -38,6 +45,46 @@ export default {
             reject(error);
           });
       });
+
+      // return new Promise((resolve, reject) => {
+      //   getMenuList()
+      //     .then(response => {
+      //       var json = response.data;
+      //       var str = 'home' 
+      //       var router = [{
+      //         path: "/student/home",
+      //         component: Layout,
+      //         children: [
+      //           {
+      //             path: "",
+      //             component: () => import('../student'+str+'.vue'),
+      //             meta: { title: "首页", icon: "dashboard" }
+      //           }
+      //         ]
+      //       }];
+
+      //       json.filter(p => {
+      //         p.component = Layout;
+      //         var son = p.children;
+      //         son.filter(s => {
+      //           var im = (s.component = () =>
+      //             import("../" + s.component + ".vue"));
+      //           // console.log(im);
+      //         });
+      //       });
+
+      //       console.log(router);
+      //       // console.log(s1)
+      //       alert("123");
+
+      //       alert("321");
+      //       resolve();
+      //     })
+      //     .catch(error => {
+      //       reject(error);
+      //     });
+      // });
+      // },
     },
 
     handleSetLineChartData(type) {
