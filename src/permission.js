@@ -1,45 +1,45 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+const whiteList = ['/login']
 
 router.beforeEach(async (to, from, next) => {
 
   NProgress.start()
 
-  if (to.path === '/login') {
-    next()
-    NProgress.done()
-  } else {
+  const token = JSON.parse(sessionStorage.getItem('token'))
 
-    const hasRoles = store.getters.roles
-    if (hasRoles != '') {
+  if (token && token != '') {
+    next()
+    if (to.path === '/login') {
       next()
     } else {
-      try {
-
-        let roles = '1'
-        const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-        await store.dispatch('user/setInfo', roles)
+      const hasRoles = store.getters.roles
+      if (hasRoles) {
+        next()
+      } else {
+        const roles = sessionStorage.getItem('roles')
+        const accessRoutes = await store.dispatch('permission/generateRoutes')
+        const res = await store.dispatch('authorization/setRoles', roles)
         router.addRoutes(accessRoutes)
-
+        // alert("add finish")
         next({ ...to, replace: true })
-      } catch (error) {
-        await store.dispatch('user/resetToken')
-        Message.error(error || 'Has Error')
-        next(`/login?redirect=${to.path}`)
-        NProgress.done()
       }
+    }
+  } else {
+    if (whiteList.indexOf(to.path) !== -1) {
+      next()
+    } else {
+      next(`/login?redirect=${to.path}`)
+      NProgress.done()
     }
   }
 })
 
 router.afterEach(() => {
-  // finish progress bar
   NProgress.done()
 })

@@ -1,52 +1,52 @@
-import { login, logout, getInfo } from '@/api/authorization'
-import {studenMenu, teacherMenu, updateRouter, constantRouconstantRoutes } from '@/router/index'
-import router from '@/router/index'
+import { login } from '@/api/authorization'
+import { studenMenu, teacherMenu, updateRouter, constantRouconstantRoutes } from '@/router/index'
+import router from '@/router'
 import store from '@/store'
+
 const state = {
-    token: '',
-    role: '',
+  token: '',
+  roles: '',
 }
 
 const mutations = {
-    SET_TOKEN: (state, token) => {
-        state.token = token
-    }
+  SET_TOKEN: (state, token) => {
+    state.token = token
+    sessionStorage.setItem('token', JSON.stringify(token))
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  }
 }
 
 const actions = {
-    login({ commit }, userInfo) {
-        // const { username, password } = userInfo
-        // return new Promise((resolve, reject) => {
-            // 此login-> /api/authorization
-            // login({ username: username.trim(), password: password }).then(response => {
-                // commit("SET_TOKEN", response.token)
+  login({ commit }, userInfo) {
+    const { username, password } = userInfo
+    return new Promise((resolve, reject) => {
+      login(userInfo).then(response => {
+        commit("SET_TOKEN", response)
+        resolve();
+      })
+    })
 
-                // let role = '1';
-                // store.dispatch('permission/generateRoutes', '1')
-                // router.addRoutes(studenMenu)
-                // sessionStorage.setItem("store", JSON.stringify(store.getters.permission_routes));
-                // resolve()
-            // }).catch(error => {
-                // reject(error)
-            // })
-        // })
-    },
+  },
 
-    setaaa({commit}, data){
-        // alert(data)
-        commit("SET_TOKEN", data)
-    },
+  setRoles({ commit }, roles) {
+    return new Promise(resolve => {
+      commit("SET_ROLES", roles)
+      resolve(roles);
+    })
+  },
 
-    getToken(){
-        return state.token;
-    }
+  getToken() {
+    return state.token;
+  }
 }
 
 export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
-  }
-  
-  
+  namespaced: true,
+  state,
+  mutations,
+  actions
+}
+
+

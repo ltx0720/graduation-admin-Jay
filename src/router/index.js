@@ -48,23 +48,26 @@ export const studenMenu = [
     children: [
       {
         path: 'topic',
+        active: false,
+        meta: { title: '选择课题' },
         component: () => import('@/views/student/topic'), // Parent router-view
-        meta: { title: '选择课题' }
       },
       {
         path: 'bs-start',
+        active: false,
+        meta: { title: '开题报告' },
         component: () => import('@/views/student/start'), // Parent router-view
-        meta: { title: '开题报告' }
       },
       {
         path: 'upload',
+        active: false,
+        meta: { title: '毕设提交' },
         component: () => import('@/views/student/upload'),
-        meta: { title: '毕设提交' }
       }
     ]
   },
 
-   // 毕设流程
+  // 毕设流程
   //  {
   //   path: '/student/task',
   //   component: Layout,
@@ -82,13 +85,13 @@ export const studenMenu = [
   // },
 ]
 
+  
 export const teacherMenu = [
   // teacher
   // 首页
   {
     path: '/teacher/home',
     component: Layout,
-    // redirect: '/example/table',
     children: [
       {
         path: '',
@@ -141,14 +144,18 @@ export const teacherMenu = [
 
 ]
 
+
 export const managerMenu = [
 
+  {
+    path: '/home',
+    redirect: '/manager/home'
+  },
 
-  // 首页
   {
     path: '/manager/home',
     component: Layout,
-    // redirect: '/example/table',
+    meta: { title: '首页', icon: 'form' },
     children: [
       {
         path: '',
@@ -162,6 +169,7 @@ export const managerMenu = [
   {
     path: '/manager/approve',
     component: Layout,
+    meta: { title: '审批', icon: 'form' },
     // redirect: '/example/table',
     children: [
       {
@@ -172,8 +180,22 @@ export const managerMenu = [
     ]
   },
 
-   // 菜单管理
-   {
+    // 菜单管理
+    {
+      path: '/manager/publish',
+      component: Layout,
+      // redirect: '/example/table',
+      children: [
+        {
+          path: '',
+          component: () => import('@/views/manager/publish'),
+          meta: { title: '菜单管理', icon: 'form' }
+        }
+      ]
+    },
+
+  // 菜单管理
+  {
     path: '/manager/menu',
     component: Layout,
     // redirect: '/example/table',
@@ -185,44 +207,27 @@ export const managerMenu = [
       }
     ]
   },
- 
-  
- {
-  path: '/manager/file',
-  component: Layout,
-  // redirect: '/example/table',
-  children: [
-    {
-      path: '',
-      component: () => import('@/views/common/fileshow'),
-      meta: { title: '查看文件', icon: 'form' }
-    }
-  ]
-},
 
-  // {
-  //   path: '/manager/file',
-  //   component: Layout,
-  //   // redirect: '/example/table',
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: () => import('@/views/common/filedownload'),
-  //       meta: { title: '文件下载', icon: 'form' }
-  //     }
-  //   ]
-  // }
 
+  {
+    path: '/manager/file',
+    component: Layout,
+    // redirect: '/example/table',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/common/fileshow'),
+        meta: { title: '查看文件', icon: 'form' }
+      }
+    ]
+  },
 ]
 
 export const constantRoutes = [
-  
-
   {
     path: '/login',
     component: () => import('@/views/common/login')
   },
-
 
 
   {
