@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message, Notification  } from 'element-ui'
+import { MessageBox, Message, Notification } from 'element-ui'
 import store from '@/store'
 
 // 认证授权服务器地址
@@ -28,25 +28,16 @@ authorization.interceptors.request.use(
 authorization.interceptors.response.use(
   response => {
     const res = response.data
-    if(res.code == '200'){
+    if (res.code == '200') {
       return res;
-    }else{
-     Message.error({
+    } else {
+      Message.error({
         showClose: true,
         message: '请求出错，请稍后再试',
         type: 'error'
       }).alert;
     }
   },
-  error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
-  }
 )
 
 export default authorization

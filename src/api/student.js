@@ -16,14 +16,14 @@ export function topicList(){
 
 export function getSelectTeacher(){
   return student({
-    url: '/s_server/select_teacher',
+    url: '/s_server/teacher_select',
     method: 'post'
   })
 }
 
 export function isSelected(){
   return student({
-    url: '/s_server/isselected_teacher',
+    url: '/s_server/is_selected_teacher',
     method: 'post'
   })
 }
@@ -33,7 +33,7 @@ export function selectTeacher(teacher_id){
   param.append('teacher_id', teacher_id)
 
   return student({
-    url: '/s_server/select',
+    url: '/s_server/select_teacher',
     method: 'post',
     data: param
   })
@@ -41,7 +41,7 @@ export function selectTeacher(teacher_id){
 
 export function isSelectedTopic(){
   return student({
-    url: '/s_server/isselected_topic',
+    url: '/s_server/is_selected_topic',
     method: 'post'
   })
 }

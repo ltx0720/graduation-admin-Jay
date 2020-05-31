@@ -27,17 +27,17 @@ teacher.interceptors.request.use(
 teacher.interceptors.response.use(
   response => {
     const res = response.data
-    let code = res.code;
-
-    if(code == '200'){
-      return res;
-    }else{
-     Message.error({
-        showClose: true,
-        message: '请求出错，请稍后再试',
-        type: 'error'
-      }).alert;
-    }
+      let code = res.code;
+  
+      if(code == '200'){
+        return res;
+      }else{
+       Message.error({
+          showClose: true,
+          message: '出错了，请稍后再试',
+          type: 'error'
+        }).alert;
+      }
   },
   error => {
     console.log('err' + error) // for debug

@@ -7,7 +7,6 @@ export function getStudentList() {
   })
 }
 
-
 export function getTopicApprove(type) {
     return teacher({
       url: '/t_server/topic_approve/' + type,
@@ -15,9 +14,11 @@ export function getTopicApprove(type) {
     })
 }
 
-export function approceHandle(action, id){
+export function approceHandle(action, row){
   var param = new URLSearchParams()
-  param.append('id', id)
+  param.append('id', row.id)
+  param.append('opinion', row.opinion)
+
   return teacher({
     url: '/t_server/approve/' + action,
     method: 'post',

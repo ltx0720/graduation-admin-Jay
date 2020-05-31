@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message  } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 
 // 认证授权服务器地址
@@ -31,12 +31,12 @@ student.interceptors.response.use(
     const res = response.data
     let code = res.code;
 
-    if(code == '200'){
+    if (code == '200') {
       return res;
-    }else{
-     Message.error({
+    } else {
+      Message.error({
         showClose: true,
-        message: '错了哦，这是一条错误消息',
+        message: '出错了，请稍后再试',
         type: 'error'
       }).alert;
     }

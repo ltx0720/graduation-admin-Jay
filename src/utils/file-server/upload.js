@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Message  } from 'element-ui'
-import store from '@/store'
-
+import student from '@/utils/student'
 // 认证授权服务器地址
 const upload = axios.create({
   baseURL: 'http://localhost:8083',

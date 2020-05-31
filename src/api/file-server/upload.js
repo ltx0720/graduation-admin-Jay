@@ -1,5 +1,6 @@
 import upload from '@/utils/file-server/upload'
 import CryptoJS from 'crypto-js/crypto-js'
+import student from '@/utils/student'
 
 /**
  * 1.请求公钥
@@ -39,6 +40,7 @@ export function getToken() {
 
 export function writeRecord(fileKey, type_id) {
     let param = new URLSearchParams();
+    
     param.append('key', fileKey);
     param.append('type_id', type_id);
 
@@ -47,6 +49,11 @@ export function writeRecord(fileKey, type_id) {
         method: 'post',
         data: param
     })
+
+    // return student({
+    //     url: '/s_server/topic',
+    //     method: 'post'
+    //   })
   }
   
 function decrypt(data, key) {

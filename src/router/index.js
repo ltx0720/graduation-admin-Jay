@@ -224,6 +224,12 @@ export const managerMenu = [
 ]
 
 export const constantRoutes = [
+
+  {
+    path: '/test',
+    component: () => import('@/views/common/news-show')
+  },
+
   {
     path: '/login',
     component: () => import('@/views/common/login')

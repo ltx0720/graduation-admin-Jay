@@ -14,7 +14,6 @@ export function getTeacherNews() {
   })
 }
 
-
 export function teacherPublish(content) {
   var param = new URLSearchParams()
   param.append('content', content)
@@ -33,10 +32,16 @@ export function getFileList() {
   })
 }
 
-
 export function getMenuList() {
   return common({
     url: '/c_server/menu',
+    method: 'post',
+  })
+}
+
+export function getNewsData(id) {
+  return common({
+    url: '/c_server/news/' + id,
     method: 'post',
   })
 }
