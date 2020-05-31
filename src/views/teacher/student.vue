@@ -1,12 +1,16 @@
 <template>
   <div class="components-container">
     <aside>学生信息</aside>
-    <el-table :data="studentList" stripe style="width: 90%">
-      <el-table-column type="index" label="序号"></el-table-column>
-      <!-- <el-table-column prop="number" label="学号"></el-table-column> -->
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="class_name" label="班级"></el-table-column>
-      <el-table-column prop="topic_title" label="课题"></el-table-column>
+    <el-table :data="studentList" stripe>
+      <el-table-column align="center" type="index" label="序号"></el-table-column>
+      <el-table-column align="center" prop="name" label="姓名"></el-table-column>
+      <el-table-column align="center" prop="class_name" label="班级"></el-table-column>
+      <el-table-column align="center" prop="topic_title" label="课题">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.topic_title.length == 0" type="danger">未选择课题</el-tag>
+           <el-tag v-else type="success">{{scope.row.topic_title}}</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>

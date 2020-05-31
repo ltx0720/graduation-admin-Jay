@@ -4,7 +4,7 @@
 
     <el-table-column width="150px" align="center" label="申请人">
       <template slot-scope="scope">
-        <span>{{ scope.row.student_name | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        <span>{{ scope.row.student_name }}</span>
       </template>
     </el-table-column>
 
@@ -18,12 +18,13 @@
       <template slot-scope="{row}">
         <template v-if="row.edit">
           <el-input v-model="row.opinion" class="edit-input" size="small" />
-          <el-button class="cancel-btn" size="small" type="warning" @click="cancelEdit(row)">取消</el-button>
+          <el-button class="cancel-btn" size="small" type="danger" @click="cancelEdit(row)">取消</el-button>
         </template>
         <span v-else>{{ row.opinion }}</span>
       </template>
     </el-table-column>
 
+    <!-- 只在待审批 tab 标签页中显示 -->  
     <el-table-column v-if="state" align="center" label="编辑意见" width="120">
       <template slot-scope="{row}">
         <el-button v-if="row.edit" type="success" size="small" @click="confirmEdit(row)">确定</el-button>
@@ -37,10 +38,19 @@
       </template>
     </el-table-column>
 
+    <!-- 只在已审批 tab 标签页中显示 -->
+    <el-table-column v-if="!state" align="center" min-width="100px" label="审批状态">
+      <template slot-scope="{row}">
+        <el-tag v-if="row.state == -1" type="danger">已拒绝</el-tag>
+        <el-tag v-if="row.state == 1" type="success">已通过</el-tag>
+      </template>
+    </el-table-column>
+
+    <!-- 只在待审批 tab 标签页中显示 -->
     <el-table-column v-if="state" align="center" label="操作">
       <template slot-scope="{row}">
-        <el-button type="success" size="mini" @click="approveHandle('pass', row.id)">通过</el-button>
-        <el-button type="danger" size="mini" @click="approveHandle('refuse', row.id)">拒绝</el-button>
+        <el-button type="success" size="mini" @click="approveHandle('pass', row)">通过</el-button>
+        <el-button type="danger" size="mini" @click="approveHandle('refuse', row)">拒绝</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -51,7 +61,7 @@
 import { getTopicApprove, approceHandle } from "@/api/teacher";
 
 export default {
-  inject: ["reload"],
+  // inject: ["reload"],
   props: {
     type: {
       type: String,
@@ -107,11 +117,13 @@ export default {
       });
     },
 
-    approveHandle(action, id) {
+    approveHandle(action, row) {
+      console.log(row);
+
       return new Promise((resolve, reject) => {
-        approceHandle(action, id).then(response => {
+        approceHandle(action, row).then(response => {
           let msg, type;
-          if (response.data == "success") {
+          if (response.data) {
             msg = "操作成功";
             type = "success";
           } else {
@@ -124,9 +136,8 @@ export default {
             type: type
           });
           this.timer = setTimeout(() => {
-              this.$router.go(0);
+            this.$router.go(0);
           }, 1000);
-       
         });
       });
     }

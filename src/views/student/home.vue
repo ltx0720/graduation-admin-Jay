@@ -4,13 +4,17 @@
     <div style="margin-top: 15px; ">
       <el-timeline>
         <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
-          <el-card style="width: 500px">
+          <el-card style="width: 500px"  @click.native="show(news.id)">
             <h3>{{news.title}}</h3>
-            <p style="float: right">{{news.author}} - {{news.create_time}}</p>
+            <p style="float: right">{{news.author}} 提交与 {{news.create_time}}</p>
           </el-card>
         </el-timeline-item>
       </el-timeline>
     </div>
+
+    <el-dialog title="消息" :visible.sync="dialogVisible" width="30%">
+      <div class="editor-content" v-html="content" />
+    </el-dialog>
   </div>
 </template>
 
@@ -18,7 +22,7 @@
 <script>
 import CountTo from "vue-count-to";
 import { getNews } from "@/api/student";
-import { getMenuList } from "@/api/common";
+import { getMenuList, getNewsData } from "@/api/common";
 import Layout from "@/layout";
 import Vue from "vue";
 import Router from "vue-router";
@@ -29,66 +33,40 @@ export default {
   name: "studentHome",
   data() {
     return {
+      dialogVisible: false,
+      content: "",
       newsList: []
     };
   },
   methods: {
     getNews: function() {
       return new Promise((resolve, reject) => {
-        getNews()
-          .then(response => {
-            this.newsList = response.data;
-            console.log(response.data)
-            resolve();
-          })
-          .catch(error => {
-            reject(error);
-          });
+        getNews().then(response => {
+          this.newsList = response.data;
+          console.log(response.data);
+          resolve();
+        });
       });
-
-      // return new Promise((resolve, reject) => {
-      //   getMenuList()
-      //     .then(response => {
-      //       var json = response.data;
-      //       var str = 'home' 
-      //       var router = [{
-      //         path: "/student/home",
-      //         component: Layout,
-      //         children: [
-      //           {
-      //             path: "",
-      //             component: () => import('../student'+str+'.vue'),
-      //             meta: { title: "首页", icon: "dashboard" }
-      //           }
-      //         ]
-      //       }];
-
-      //       json.filter(p => {
-      //         p.component = Layout;
-      //         var son = p.children;
-      //         son.filter(s => {
-      //           var im = (s.component = () =>
-      //             import("../" + s.component + ".vue"));
-      //           // console.log(im);
-      //         });
-      //       });
-
-      //       console.log(router);
-      //       // console.log(s1)
-      //       alert("123");
-
-      //       alert("321");
-      //       resolve();
-      //     })
-      //     .catch(error => {
-      //       reject(error);
-      //     });
-      // });
-      // },
     },
 
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type];
+    },
+
+    show(id) {
+      var a = this.getContent(id).then(res => {
+        this.content = res;
+        this.dialogVisible = true;
+      });
+    },
+
+    getContent(id) {
+      return new Promise((resolve, reject) => {
+        getNewsData(id).then(response => {
+          //
+          resolve(response.data);
+        });
+      });
     }
   },
 

@@ -6,7 +6,7 @@
           <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
             <el-card style="width: 500px">
               <h3>{{news.title}}</h3>
-              <p style="float: right">{{news.author}} 提交于 {{news.create}}</p>
+              <p style="float: right">{{news.author}} 提交于 {{news.create_time}}</p>
             </el-card>
           </el-timeline-item>
         </el-timeline>

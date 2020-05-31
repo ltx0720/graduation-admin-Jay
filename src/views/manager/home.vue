@@ -1,16 +1,20 @@
 <template>
   <div class="components-container">
-      <aside>消息通知</aside>
-      <div style="margin-top: 15px; ">
-        <el-timeline>
-          <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
-            <el-card style="width: 500px">
-              <h3>{{news.title}}</h3>
-              <p style="float: right">{{news.author}} 提交于 {{news.create}}</p>
-            </el-card>
-          </el-timeline-item>
-        </el-timeline>
-      </div>
+    <aside>消息通知</aside>
+    <div style="margin-top: 15px; ">
+      <el-timeline>
+        <el-timeline-item v-for="(news, index) in newsList" :key="index" placement="top">
+          <el-card style="width: 500px" @click.native="show(news.id)">
+            <h3>{{news.title}}</h3>
+            <p style="float: right">{{news.author}} 提交于 {{news.create}}</p>
+          </el-card>
+        </el-timeline-item>
+      </el-timeline>
+    </div>
+
+    <el-dialog title="消息" :visible.sync="dialogVisible" width="30%">
+      <div class="editor-content" v-html="content" />
+    </el-dialog>
   </div>
 </template>
 
@@ -18,19 +22,19 @@
 <script>
 import CountTo from "vue-count-to";
 import { getNews } from "@/api/manager";
+import { getNewsData } from "@/api/common";
 
 export default {
   name: "teacherHome",
-  components: {
-    // PanelGroup,
-  },
   data() {
     return {
+      dialogVisible: false,
+      content: "",
       newsList: []
     };
   },
-  methods: {
 
+  methods: {
     getTeacherNews: function() {
       return new Promise((resolve, reject) => {
         getNews()
@@ -46,6 +50,24 @@ export default {
 
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type];
+    },
+
+    show(id) {
+      var a=  this.getContent(id).then(res => {
+        this.content = res;
+        this.dialogVisible = true;
+
+      });
+
+    },
+
+    getContent(id) {
+      return new Promise((resolve, reject) => {
+        getNewsData(id).then(response => {
+          //
+          resolve(response.data);
+        });
+      });
     }
   },
 
@@ -143,5 +165,8 @@ export default {
       float: none !important;
     }
   }
+}
+.editor-content {
+  margin-top: 20px;
 }
 </style>

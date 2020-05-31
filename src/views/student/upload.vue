@@ -33,7 +33,6 @@ export default {
         token: getToken().then(res => {
           this.qiniuData.token = res;
         })
-        // filename
       }
     };
   },
@@ -71,6 +70,7 @@ export default {
 
     uploadSuccess(response, file, fileList) {
       this.record(response.key);
+
       this.$message({
         message: "上传成功",
         type: "success"
@@ -87,7 +87,7 @@ export default {
 
     record(key) {
       return new Promise((resolve, reject) => {
-        writeRecord(key).then(response => {
+        writeRecord(key, 2).then(response => {
           console.log("write success");
           resolve();
         });

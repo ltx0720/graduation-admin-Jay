@@ -1,6 +1,6 @@
 <template>
-  <div components-container>
-     <aside>选择导师</aside>
+  <div class="components-container">
+    <aside>选择导师</aside>
     <el-table :data="dataList" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -43,7 +43,7 @@ export default {
     checkSelected() {
       return new Promise((resolve, reject) => {
         isSelected().then(response => {
-            this.selected = response.data;
+          this.selected = response.data;
           resolve();
         });
       });
@@ -78,21 +78,27 @@ export default {
         type: "warning"
       })
         .then(() => {
-          let res = selectTeacher(row.teacher_id);
-          if (res) {
-            this.$message({
-              type: "success",
-              message: "选择成功!"
+          new Promise(resolve => {
+            selectTeacher(row.teacher_id).then(res => {
+              resolve(res);
             });
-            this.timer = setTimeout(() => {
-              this.$router.go(0);
-            }, 700);
-          } else {
-            this.$message({
-              type: "error",
-              message: "选择失败，请刷新后重新选择!"
-            });
-          }
+          }).then(res => {
+            if (res) {
+              this.$message({
+                type: "success",
+                message: "选择成功!"
+              });
+
+              this.timer = setTimeout(() => {
+                this.$router.go(0);
+              }, 700);
+            } else {
+              this.$message({
+                type: "error",
+                message: "选择失败，请刷新后重新选择!"
+              });
+            }
+          });
         })
         .catch(() => {
           this.$message({
